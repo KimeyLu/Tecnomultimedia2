@@ -1,3 +1,5 @@
+**VOY A VER SI HOY PUEDO PASAR LOS CODIGOS QUE HICIMOS A LOS ESTADOS
+
 Datos importantes a tener en cuenta en esta rama:<br>
 1 -Por ahora, los estados funcionan por limite de tiempo, habria que ver cual queremos modificar y como. <br>
 2 -Cree clases para que agreguemos los eventos ahí sin ocupar tanto espacio, igual si no llegan a pasar los codigos que hicimos a clases no pasa nada.<br>
