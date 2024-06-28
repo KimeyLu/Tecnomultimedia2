@@ -1,55 +1,47 @@
 class Manchas {
   constructor() {
-    //let img;
-    this.manchasB = [];
-    //let imagesOnScreen = [];
-    this.cantidadMancha = 4;
-    
-    /*this.x = random(0, width);
-    this.y = random(0, height);
-    this.x2 = random(100, 200);
-    this.y2 = random(100, 200);*/
-    
-    
-    this.x = this.x;
-    
+    this.manchasB = [];   
+    this.x = this.x;  
     this.y = 0;
     this.x2 = 0;
-    this.y2 = 0;
-    
-    //img = loadImage('data/fondo.png');
-    
-    for(let i = 0; i < this.cantidadMancha; i++) {
+    this.y2 = 0;   
+    for(let i = 0; i < 4; i++) {
       let nombre = "data/mancha" + nf(i, 2) + ".png";
       this.manchasB[i] = loadImage(nombre);
-    }
+    }   
+    this.historial = [];    
   }
   
   dibujar() {
-      // Dibujar las imágenes de manchas   
-    /*this.x = random(0, width);
-    this.y = random(0, height);
-    this.x2 = random(100, 200);
-    this.y2 = random(100, 200);*/
-
-  if (estado == "fondo") {
-    this.x = random(0, width);
-    this.y = random(0, height);
-    this.x2 = random(100, 200);
-    this.y2 = random(100, 200);
+   ///background(207,193,166);
+   //tint(255, 100);
+      if (estado == "fondo") {
+        if (haySonido){
+          this.x = random(width);
+          this.y = random(height);
+          this.x2 = 200;
+          this.y2 = 200;
+        }
+      } else {
+        this.x = this.x; 
+        this.y = this.y; 
+        this.x2 =this.x2 ;
+        this.y2 = this.y2;
+      }
+       
+       var vectorPosicion = createVector(this.x, this.y);
+       this.historial.push(vectorPosicion);
+       //console.log(this.historial);
+  
+       for(let j = 0; j < 4; j++) {
+         for(let i = 0; i < this.historial.length; i++) {
+           var pos = this.historial[i];
+          // pop();
+            // tint(255, 100);     si pongo todo esto el programa se lageea y desaparecen las plumas
+            // imageMode(CENTER);
+           image(this.manchasB[j],pos.x, pos.y, this.x2, this.y2);
+          // push();
+         }
+       }
   }
-  
-    for(let i = 0; i < this.cantidadMancha; i++) {
-       push();
-       tint(255, 100);
-       imageMode(CENTER);
-       image(this.manchasB[i],this.x, this.y, this.x2, this.y2);
-       pop();
-    }
-  }
-  
-  
-  
-  
-  
 }

@@ -92,19 +92,13 @@ let imgaen;
 
 function preload() {
   img = loadImage('data/fondo.png');
-  //
-  
+  //-------------------Plumas-------------------------/
     for(let i = 0; i < cantidadMancha; i++) {
       let nombre = "data/mancha" + nf(i, 2) + ".png";
       manchasB[i] = loadImage(nombre);
     }
-  /*for (let i = 0; i < cantidadMancha; i++) {
-    //let nombre = "data/mancha" + nf(i, 2) + ".png";
-    manchasB = loadImage("data/mancha0"+i+".png");
-  }*/
-  //manchasB = loadImage("data/mancha01.png");
-  //--Manchas--/
-  //fondo = loadImage("data/fondo_tecno.png");
+
+  //-------------------Plumas-------------------------/
   imagenes[0] = loadImage("data/obj1.png");
   imagenes[1] = loadImage("data/obj2.png");
   imagenes[2] = loadImage("data/obj3.png");
@@ -181,20 +175,13 @@ function draw() {
   
   //**************ESTADOS****************
   if (estado === "fondo") {      
-  
-
-          
+           
      if (inicioElSonido) { //EVENTO
      manchas.dibujar()
     } 
     if (haySonido) {
       manchas.dibujar()
-    }
-            
-      
-    //
-    //text("ESTAMOS EN EL ESTADO: "+estado,10, 20);
-    //      
+    }    
     
     //CONTADOR(cambio de estado)-----------//
       if (finDelSonido) {marca = millis();}
@@ -204,11 +191,8 @@ function draw() {
     //-------------------------------------//
   } else if (estado === "barra") {   
    background(207,193,166);       
-    //if (inicioElSonido) { //EVENTO
-    
-      manchas.dibujar();
-   // } 
 
+      manchas.dibujar(); 
 
     // Asegurarse de que la barra negra siempre esté al menos un 70% llena
     let tamañoMinimoBarra = 0.7 * tamañoMaxRec;
