@@ -51,11 +51,18 @@ let ymanchas;
 let x2manchas;
 let y2manchas;
 
+
+
 //---VARIABLES DE LA BARRA---------------------------------------------------------------------//
-let barra;
-///nuevo
 let ampli;
-let tamañoMaxRec = 500;
+let tamañoMaxRec;
+
+let primerColorGrad, segundoColorGrad;
+
+let colorBarraEstatica;
+let tamañoBarra;
+let tamañoMinimoBarra;
+let posRandomY;
 //---VARIABLES DE LAS PLUMAS---------------------------------------------------------------------//
 let imagenes = [];
 let posicionesX = [];
@@ -117,7 +124,6 @@ function setup() {
   //capaDelMedio = createGraphics(windowsX, windowsY);
   //otroCanvas.clear();
     manchas = new Manchas();
- // barra = new Barra();
   
   audioContext = getAudioContext();
   mic = new p5.AudioIn();
@@ -128,12 +134,24 @@ function setup() {
   gestorPitch = new GestorSenial(FREC_MIN, FREC_MAX);  
   antesHabiaSonido = false;
   
-    //manchas
-      let xmanchas = 0;
+  //--manchas--//
+    let xmanchas = 0;
     let ymanchas = 0;
     let x2manchas = 0;
     let y2manchas = 0;
-  
+    
+  //--Barra--//
+  //primerColorGrad = color(0);
+ // segundoColorGrad = color(255, 0, 0);
+
+ /* for(let x = 0; x < width; x++){
+    rango = map(x, 0, width, 0, 1);
+    let gradiente = lerpColor(primerColorGrad, segundoColorGrad, rango);
+    line(0, x, width, x);
+  }*/
+  tamañoMaxRec = windowsX-40;
+  posRandomY = random(height/2, height/3);
+
   //--plumas--//
   posicionesX[0] = 130;
   posicionesX[1] = 180;
@@ -175,43 +193,52 @@ function draw() {
   
   //**************ESTADOS****************
   if (estado === "fondo") {      
-           
+     //background(207,193,166); 
+     background(206,204,189);  
+     
      if (inicioElSonido) { //EVENTO
-     manchas.dibujar()
+     manchas.aparecer();
+     manchas.dibujar();
     } 
     if (haySonido) {
-      manchas.dibujar()
+      manchas.dibujar();
     }    
     
     //CONTADOR(cambio de estado)-----------//
       if (finDelSonido) {marca = millis();}
-      if (!haySonido ) {let ahora = millis();
+      if (!haySonido ) {
+        manchas.dibujar();
+        let ahora = millis();
         if (ahora > marca + tiempoLimitefondo) {estado = "barra";
           marca = millis();}}
     //-------------------------------------//
   } else if (estado === "barra") {   
-   background(207,193,166);       
-
-      manchas.dibujar(); 
-
-    // Asegurarse de que la barra negra siempre esté al menos un 70% llena
-    let tamañoMinimoBarra = 0.7 * tamañoMaxRec;
-    let tamañoBarra = map(ampli, 0, 1, tamañoMinimoBarra, tamañoMaxRec); // Mapear la amplitud filtrada al tamaño de la barra
+   background(206,204,189);       
+   manchas.dibujar(); 
+    
+    //posRandomY = random(height/2, height/3);
+    
+    // Asegurarse de que la Barra negra siempre esté al menos un 70% llena
+    tamañoMinimoBarra = 0.7 * tamañoMaxRec;
+    tamañoBarra = map(ampli, 0, 1, tamañoMinimoBarra, tamañoMaxRec); // Mapear la amplitud filtrada al tamaño de la Barra
     tamañoBarra = min(tamañoBarra, tamañoMaxRec); // Limitar el tamaño de la barra dinámica al tamaño máximo de la barra estática
 
     // Mapear el valor del tono a un rango de colores de rojo a blanco            //gestorPitch.actualizar
-    let colorBarraEstatica = lerpColor(color(255, 0, 0), color(255, 255, 255), map(pitchValue, 50, 500, 0, 1));
+     colorBarraEstatica = lerpColor(color(255, 0, 0), color(255, 255, 255), map(pitchValue, 50, 500, 0, 1));
 
-    // Dibujar la barra estática detrás
+    // Dibujar la Barra estática detrás
     push();
-    fill(colorBarraEstatica); // Color de la barra estática (cambia de rojo a blanco según el tono)
-    rect(20, height/2 - 25, tamañoMaxRec, 50); // Dibujar la barra estática
+    //quizas puedo poner un gradiente aca
+    fill(colorBarraEstatica); // Color de la Barra estática (cambia de rojo a blanco según el tono)
+    rect(20, posRandomY - 25, tamañoMaxRec, 50); // Dibujar la Barra estática
     pop();
-
-    // Dibujar la barra dinámica delante (negra)
+      //height/2
+      //o aca
+    
+    // Dibujar la Barra dinámica delante (negra)
     push();
-    fill(0, 0, 0); // Color de la barra dinámica (negro)
-    rect(20, height/2 - 25, tamañoBarra, 50); // Dibujar la barra dinámica
+    fill(0, 0, 0); // Color de la Barra dinámica (negro)
+    rect(20, posRandomY - 25, tamañoBarra, 50); // Dibujar la Barra dinámica
     pop();
 
 
@@ -222,28 +249,21 @@ function draw() {
           marca = millis();}}
     //-------------------------------------//
   } else if (estado === "plumas") {
-    background(207,193,166);
-                //manchas
-manchas.dibujar();
-      
+    background(206,204,189); 
+    manchas.dibujar();
     
-        let tamañoMinimoBarra = 0.7 * tamañoMaxRec;
-    let tamañoBarra = map(ampli, 0, 1, tamañoMinimoBarra, tamañoMaxRec); // Mapear la amplitud filtrada al tamaño de la barra
-    tamañoBarra = min(tamañoBarra, tamañoMaxRec); // Limitar el tamaño de la barra dinámica al tamaño máximo de la barra estática
-
-    // Mapear el valor del tono a un rango de colores de rojo a blanco            //gestorPitch.actualizar
-    let colorBarraEstatica = lerpColor(color(255, 0, 0), color(255, 255, 255), map(pitchValue, 50, 500, 0, 1));
-
-    // Dibujar la barra estática detrás
+    posRandomY = posRandomY;
+      
+    // Dibujar la Barra estática detrás
     push();
     fill(colorBarraEstatica); // Color de la barra estática (cambia de rojo a blanco según el tono)
-    rect(20, height/2 - 25, tamañoMaxRec, 50); // Dibujar la barra estática
+    rect(20, posRandomY - 25, tamañoMaxRec, 50); // Dibujar la barra estática 
     pop();
 
-    // Dibujar la barra dinámica delante (negra)
+    // Dibujar la Barra dinámica delante (negra)
     push();
-    fill(0, 0, 0); // Color de la barra dinámica (negro)
-    rect(20, height/2 - 25, tamañoBarra, 50); // Dibujar la barra dinámica
+    fill(0, 0, 0); // Color de la Barra dinámica (negro)
+    rect(20, posRandomY - 25, tamañoBarra, 50); // Dibujar la Barra dinámica
     pop();
 
  
@@ -280,7 +300,6 @@ manchas.dibujar();
   }
   //otroCanvas.clear();
   //otroCanvas.image(imgaen, 0, 0, 80, 350);
-  //barra.dibujar();
   image(otroCanvas, 0, 0); 
 
   amp = mic.getLevel();
