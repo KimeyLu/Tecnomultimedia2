@@ -265,24 +265,36 @@ function draw() {
     fill(0, 0, 0); // Color de la Barra dinámica (negro)
     rect(20, posRandomY - 25, tamañoBarra, 50); // Dibujar la Barra dinámica
     pop();
+    
+    
+     
 
- 
+
+    /*if (haySonido) {
+     for (let i = 0; i < 3; i++) {
+      push();
+        //resize()
+        imageMode(CENTER);
+        image(imagenes[i], width/3+(i*100), height/2, 350, 350);
+      pop();
+     }
+    }*/
+    
     //   
       otroCanvas.clear();
     
     //---Manchas---//   
     for (let i = 0; i < imagenes.length; i++) {
      otroCanvas.push(); //ESTO funciona (casi)
-    //push(); 
-    //otroCanvas.clear();
+
      otroCanvas.translate(posicionesX[i], PosY); //maneja el movimiento (de derecha a izquierda)
     
      otroCanvas.rotate(angulos[i]); //maneja la rotacion
     
      otroCanvas.imageMode(CENTER);      
 
-     otroCanvas.image(imagenes[i], 0, 0, 80, 350);
-    //pop();
+     otroCanvas.image(imagenes[i], width/4.3, -10, 350, 350);
+
      otroCanvas.pop(); //ESTO funciona (casi)
 //otroCanvas.clear();
     
@@ -298,8 +310,7 @@ function draw() {
       }
     }
   }
-  //otroCanvas.clear();
-  //otroCanvas.image(imgaen, 0, 0, 80, 350);
+
   image(otroCanvas, 0, 0); 
 
   amp = mic.getLevel();
@@ -328,8 +339,18 @@ function draw() {
   }
 
     //CONTADOR(cambio de estado)-----------//
-      if (finDelSonido) {marca = millis();}
-      if (!haySonido ) {let ahora = millis();
+      if (finDelSonido) {
+                   for (let i = 0; i < 3; i++) {
+      push();
+        //resize()
+        imageMode(CENTER);
+        image(imagenes[i], width/3+(i*100), height/2, 350, 350);
+      pop();
+    }
+      marca = millis();}
+      if (!haySonido ) {
+
+        let ahora = millis();
         if (ahora > marca + tiempoLimiteplumas) {estado = "reiniciar";
           marca = millis();}}
     //-------------------------------------//   
