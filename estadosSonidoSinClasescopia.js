@@ -293,7 +293,7 @@ function draw() {
     
      otroCanvas.imageMode(CENTER);      
 
-     otroCanvas.image(imagenes[i], width/4.3, -10, 350, 350);
+     otroCanvas.image(imagenes[i], width/4.3, 0, 230, 370);
 
      otroCanvas.pop(); //ESTO funciona (casi)
 //otroCanvas.clear();
