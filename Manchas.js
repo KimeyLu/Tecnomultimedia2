@@ -25,10 +25,9 @@ class Manchas {
   }
   
   aparecer(){
-   // if (!this.mostrarDerechaSuperior && !this.mostrarIzquierdaSuperior && !this.mostrarIzquierdaInferior && !this.mostrarDerechaInferior) {
-      this.mostrarDerechaSuperior = true;  //ahora, si pongo true, hay 2 que se dibujan al mismo tiempo
-   // }     COPIAR EL CODIGO EN PLUMAS (poner "!this.mostrarDerechaSuperior" y "else if")
-    if (this.mostrarDerechaSuperior && !this.mostrarIzquierdaSuperior) {
+    if (!this.mostrarDerechaSuperior) { 
+      this.mostrarDerechaSuperior = true;  
+    } else if (this.mostrarDerechaSuperior && !this.mostrarIzquierdaSuperior) {
       this.mostrarIzquierdaSuperior = true;
     } else if (this.mostrarIzquierdaSuperior && !this.mostrarIzquierdaInferior) {
       this.mostrarIzquierdaInferior = true;
@@ -56,72 +55,3 @@ class Manchas {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*class Manchas {
-  constructor() {
-    //nuevo
-    this.manchasB = [];   
-    this.x = this.x;  
-    this.y = 0;
-    this.x2 = 0;
-    this.y2 = 0;   
-    for(let i = 0; i < 4; i++) {
-      let nombre = "data/mancha" + nf(i, 2) + ".png";
-      this.manchasB[i] = loadImage(nombre);
-    }  
-    this.historial = [];    
-  }
-  
-  dibujar() { 
-   background(207,193,166);
-   //tint(255, 100);
-      if (estado == "fondo") {
-        if (haySonido){
-          this.x = random(width);
-          this.y = random(height);
-          this.x2 = 200;
-          this.y2 = 200;
-        }
-      } else {
-        this.x = this.x; 
-        this.y = this.y; 
-        this.x2 =this.x2 ;
-        this.y2 = this.y2;
-      }
-       
-       var vectorPosicion = createVector(this.x, this.y);
-       this.historial.push(vectorPosicion);
-       //console.log(this.historial);     
-  
-       for(let j = 0; j < 4; j++) {
-         for(let i = 0; i < this.historial.length; i++) {
-           var pos = this.historial[i];
-           push();
-             //tint(255, 100);  // si pongo todo esto junto el programa se lageea 
-             imageMode(CENTER);  
-             image(this.manchasB[j],pos.x, pos.y, this.x2, this.y2);
-           pop();
-         }
-       }
-  }
-}*/

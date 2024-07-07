@@ -8,7 +8,6 @@ class Plumas {
     this.mostrarCentroRotada = false;
     this.mostrarDerechaRotada = false;
     
-    //imageMode(CENTER);
     //dibujar imagenes
     this.tamañoImagen = 250;
     this.imgIzquierda = loadImage('data/obj1.png');
@@ -24,8 +23,6 @@ class Plumas {
       this.posYDerecha = 200;    
       
     //cambiar Angulos
-    //this.anguloDerecha = -80;
-    //this.anguloIzquierda = 80;
     this.angulo = -80;
     
     angleMode(DEGREES);
@@ -68,26 +65,21 @@ dibujar(){
     }
     
   }
-  //quizas poner un backgropund que al estar en la funcion dibujar() esta completamente transparente, y cuando 
-  //la imagen de la mancha rotada se dibuja el background cambia la opacidad? (quizas afecte las otras capas 
-  //del codigo (manchas, barra))
   
    aparecerRotadas(){
-    if (!this.mostrarIzquierdaRotada) {
-      this.mostrarIzquierdaRotada = true;  
-    } else if (this.mostrarIzquierdaRotada && !this.mostrarCentroRotada) {
+    if (!this.mostrarCentroRotada && this.mostrarCentro) {
       this.mostrarCentroRotada = true;
-    } else if (this.mostrarCentroRotada && !this.mostrarDerechaRotada) {
+    } 
+    if (!this.mostrarIzquierdaRotada && this.mostrarIzquierda) {
+      this.mostrarIzquierdaRotada = true; 
+    }
+    if (!this.mostrarDerechaRotada && this.mostrarDerecha) {
       this.mostrarDerechaRotada = true;
     } 
   }
   
   cambiarAngulos(){
-  //para que las manchas no cambien de angulo al mismo tiempo, jugar con los true/false de las variables de "mostrar"
-   
-   if (haySonido && this.angulo == -80) {
-     this.angulo == this.angulo + 100;
-   }
+  //para que las manchas no cambien de angulo al mismo tiempo, jugar con los true/false de las variables de "mostrar"  
     
    //izquierda
    if (this.mostrarIzquierdaRotada) {    
@@ -112,7 +104,7 @@ dibujar(){
      image(this.imgDerecha, 0, 0);
      pop();  
    }
-      
+
    //derecha
    if (this.mostrarDerechaRotada) {  
      this.mostrarDerecha = false;
