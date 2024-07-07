@@ -1,9 +1,128 @@
 class Plumas {
   constructor() {
-      this.imagenes = loadImage('data/obj3.png');
+    this.mostrarIzquierda = false;
+    this.mostrarCentro = false;
+    this.mostrarDerecha = false; 
+    
+    this.mostrarIzquierdaRotada = false;
+    this.mostrarCentroRotada = false;
+    this.mostrarDerechaRotada = false;
+    
+    //imageMode(CENTER);
+    //dibujar imagenes
+    this.tamañoImagen = 250;
+    this.imgIzquierda = loadImage('data/obj1.png');
+    this.imgDerecha = loadImage('data/obj2.png');
+      //izquierda
+      this.posXIzquierda = 100;  
+      this.posYIzquierda = 200;                   
+      //centro
+      this.posXCentro = width/2;                                           
+      this.posYCentro = 200;                                      
+      //derecha
+      this.posXDerecha = width - 100;                     
+      this.posYDerecha = 200;    
+      
+    //cambiar Angulos
+    //this.anguloDerecha = -80;
+    //this.anguloIzquierda = 80;
+    this.angulo = -80;
+    
+    angleMode(DEGREES);
   }
   
-  dibujar() {
-      image(this.imagenes, 0, 0, width, height);    
+  aparecer(){
+    if (!this.mostrarCentro) {
+      this.mostrarCentro = true;  
+    } else if (this.mostrarCentro && !this.mostrarIzquierda) {
+      this.mostrarIzquierda = true;
+    } else if (this.mostrarIzquierda && !this.mostrarDerecha) {
+      this.mostrarDerecha = true;
+    } 
+  }
+  
+dibujar(){
+    this.imgIzquierda.resize(this.tamañoImagen, 0);
+    this.imgDerecha.resize(this.tamañoImagen, 0);
+    
+    //izquierda
+    if (this.mostrarIzquierda) {
+      push();
+      imageMode(CENTER);
+      image(this.imgIzquierda, this.posXIzquierda, this.posYIzquierda); 
+      pop();
+    }
+    //centro 
+    if (this.mostrarCentro) {
+      push();
+      imageMode(CENTER);
+      image(this.imgDerecha, this.posXCentro, this.posYCentro);
+      pop();
+    }
+    //derecha
+    if (this.mostrarDerecha) { 
+      push();
+      imageMode(CENTER);
+      image(this.imgIzquierda, this.posXDerecha, this.posYDerecha); 
+      pop();
+    }
+    
+  }
+  //quizas poner un backgropund que al estar en la funcion dibujar() esta completamente transparente, y cuando 
+  //la imagen de la mancha rotada se dibuja el background cambia la opacidad? (quizas afecte las otras capas 
+  //del codigo (manchas, barra))
+  
+   aparecerRotadas(){
+    if (!this.mostrarIzquierdaRotada) {
+      this.mostrarIzquierdaRotada = true;  
+    } else if (this.mostrarIzquierdaRotada && !this.mostrarCentroRotada) {
+      this.mostrarCentroRotada = true;
+    } else if (this.mostrarCentroRotada && !this.mostrarDerechaRotada) {
+      this.mostrarDerechaRotada = true;
+    } 
+  }
+  
+  cambiarAngulos(){
+  //para que las manchas no cambien de angulo al mismo tiempo, jugar con los true/false de las variables de "mostrar"
+   
+   if (haySonido && this.angulo == -80) {
+     this.angulo == this.angulo + 100;
+   }
+    
+   //izquierda
+   if (this.mostrarIzquierdaRotada) {    
+     this.mostrarIzquierda = false;   
+     push();
+     translate(this.posXIzquierda, this.posYIzquierda);
+     rotate(this.angulo);
+     //rotate(frameCount); //(para monitorear si funciona bien la rotacion). 
+     imageMode(CENTER);
+     image(this.imgIzquierda, 0, 0);
+     pop();  
+   }
+   
+   //centro
+   if (this.mostrarCentroRotada) {
+     this.mostrarCentro = false;
+     push();
+     translate(this.posXCentro, this.posYCentro);
+     rotate(this.angulo);
+     //rotate(frameCount); //(para monitorear si funciona bien la rotacion). 
+     imageMode(CENTER);
+     image(this.imgDerecha, 0, 0);
+     pop();  
+   }
+      
+   //derecha
+   if (this.mostrarDerechaRotada) {  
+     this.mostrarDerecha = false;
+     push();
+     translate(this.posXDerecha, this.posYDerecha);
+     rotate(this.angulo);
+     //rotate(frameCount); //(para monitorear si funciona bien la rotacion). 
+     imageMode(CENTER);
+     image(this.imgIzquierda, 0, 0);
+     pop();  
+   }
   }
 }

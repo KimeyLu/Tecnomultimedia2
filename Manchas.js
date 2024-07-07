@@ -27,7 +27,7 @@ class Manchas {
   aparecer(){
    // if (!this.mostrarDerechaSuperior && !this.mostrarIzquierdaSuperior && !this.mostrarIzquierdaInferior && !this.mostrarDerechaInferior) {
       this.mostrarDerechaSuperior = true;  //ahora, si pongo true, hay 2 que se dibujan al mismo tiempo
-   // }
+   // }     COPIAR EL CODIGO EN PLUMAS (poner "!this.mostrarDerechaSuperior" y "else if")
     if (this.mostrarDerechaSuperior && !this.mostrarIzquierdaSuperior) {
       this.mostrarIzquierdaSuperior = true;
     } else if (this.mostrarIzquierdaSuperior && !this.mostrarIzquierdaInferior) {

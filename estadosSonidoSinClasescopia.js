@@ -17,7 +17,7 @@ let gestorPitch;
 //------------FREC Y AMP (Calibrable)----------------
 let FREC_MIN = 49;
 let FREC_MAX = 250;
-let AMP_MIN = 0.0000001;
+let AMP_MIN = 0.001;
 let AMP_MAX = 0.06;
 //---------------------------------------------------
 //eventos
@@ -25,7 +25,7 @@ let haySonido;
 let antesHabiaSonido;
 
 //estados
-let estado = "fondo";
+let estado = "plumas";
 //let estado = "fondo";
 
 let marca;
@@ -50,8 +50,6 @@ let xmanchas;
 let ymanchas;
 let x2manchas;
 let y2manchas;
-
-
 
 //---VARIABLES DE LA BARRA---------------------------------------------------------------------//
 let ampli;
@@ -94,6 +92,7 @@ let PosY = 178;
 let fondoPosX = 0;
 let fondoPosY = 0;
 
+let plumas;
 
 let imgaen;
 
@@ -123,7 +122,8 @@ function setup() {
   //otroCanvas = createImage(windowsX, windowsY);
   //capaDelMedio = createGraphics(windowsX, windowsY);
   //otroCanvas.clear();
-    manchas = new Manchas();
+  manchas = new Manchas();
+  plumas = new Plumas();
   
   audioContext = getAudioContext();
   mic = new p5.AudioIn();
@@ -250,7 +250,7 @@ function draw() {
     //-------------------------------------//
   } else if (estado === "plumas") {
     background(206,204,189); 
-    manchas.dibujar();
+   /* manchas.dibujar();
     
     posRandomY = posRandomY;
       
@@ -264,99 +264,49 @@ function draw() {
     push();
     fill(0, 0, 0); // Color de la Barra dinámica (negro)
     rect(20, posRandomY - 25, tamañoBarra, 50); // Dibujar la Barra dinámica
-    pop();
+    pop();*/
     
     
-     
-
-
-    /*if (haySonido) {
-     for (let i = 0; i < 3; i++) {
-      push();
-        //resize()
-        imageMode(CENTER);
-        image(imagenes[i], width/3+(i*100), height/2, 350, 350);
-      pop();
-     }
-    }*/
+    if (inicioElSonido) { //EVENTO
+      plumas.aparecer();
+      plumas.dibujar();
+    } 
+    if (haySonido) {
+      plumas.dibujar();
+    }   
     
-    //   
-      otroCanvas.clear();
     
-    //---Manchas---//   
-    for (let i = 0; i < imagenes.length; i++) {
-     otroCanvas.push(); //ESTO funciona (casi)
-
-     otroCanvas.translate(posicionesX[i], PosY); //maneja el movimiento (de derecha a izquierda)
     
-     otroCanvas.rotate(angulos[i]); //maneja la rotacion
-    
-     otroCanvas.imageMode(CENTER);      
-
-     otroCanvas.image(imagenes[i], width/4.3, 0, 230, 370);
-
-     otroCanvas.pop(); //ESTO funciona (casi)
-//otroCanvas.clear();
-    
-    if (rotacionActivada) {
-      angulos[i] = radians(gradosRotacion);
-    }
-
-    if (haySonidomanchas && !MuchoSonido) {
-      posicionesX[i] += 10 * direcciones[i];
-//cambiar numeros
-      if (posicionesX[i] >= 300 || posicionesX[i] <= 100) {
-        direcciones[i] *= -1;
-      }
-    }
-  }
-
-  image(otroCanvas, 0, 0); 
-
-  amp = mic.getLevel();
-  MuchoSonido = amp > AMP_MAX;
-//rotaccion de angulo cambiar angulo de obj = rotacion
-  if (MuchoSonido && !rotacionActivada) {
-    rotacionActivada = true;
-    if (gradosRotacion === 0) {
-      anguloObjetivo = 70;
-    } else {
-      anguloObjetivo = 10;
-    }
-  }
-
-  haySonidomanchas = amp > AMP_MIN;
-
-  if (rotacionActivada) {
-    if (gradosRotacion < anguloObjetivo) {
-      gradosRotacion++;
-    } else if (gradosRotacion > anguloObjetivo) {
-      gradosRotacion--;
-    } else {
-      //si pones true se queda ahi no rota mas poner para que siga rotando
-      rotacionActivada = false;
-    }
-  }
 
     //CONTADOR(cambio de estado)-----------//
       if (finDelSonido) {
-                   for (let i = 0; i < 3; i++) {
-      push();
-        //resize()
-        imageMode(CENTER);
-        image(imagenes[i], width/3+(i*100), height/2, 350, 350);
-      pop();
-    }
+
       marca = millis();}
       if (!haySonido ) {
+        plumas.dibujar();
 
         let ahora = millis();
         if (ahora > marca + tiempoLimiteplumas) {estado = "reiniciar";
           marca = millis();}}
-    //-------------------------------------//   
+    //-------------------------------------//  
 
   } 
-  if (estado === "reiniciar") {  
+  if (estado === "reiniciar") { 
+    background(206,204,189);
+    
+    plumas.dibujar();
+    
+    if (haySonido) {
+      plumas.aparecerRotadas()
+      plumas.cambiarAngulos();
+    }
+    
+    if (finDelSonido) {
+      plumas.cambiarAngulos();
+    }
+    if (!haySonido ) {
+      plumas.cambiarAngulos();  
+    }
   } 
   
   
