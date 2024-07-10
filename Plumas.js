@@ -9,28 +9,49 @@ class Plumas {
     this.mostrarDerechaRotada = false;
     
     //dibujar imagenes
+    this.imgPlumas = [];
+    
+    let pluma1 = loadImage('data/obj0.png'); 
+    let pluma2 = loadImage('data/obj1.png');
+    let pluma3 = loadImage('data/obj2.png');
+    let pluma4 = loadImage('data/obj3.png');
+    let pluma5 = loadImage('data/mancha00.png');
+    let pluma6 = loadImage('data/mancha02.png');
+    this.imgPlumas = [pluma1, pluma2, pluma3, pluma4, pluma5,pluma6];    
+        
+    //    
     this.tamañoImagen = 250;
-    this.imgIzquierda = loadImage('data/obj1.png');
+    //this.imgIzquierda = loadImage('data/obj1.png');
     this.imgDerecha = loadImage('data/obj2.png');
+
       //izquierda
       this.posXIzquierda = 100;  
-      this.posYIzquierda = 200;                   
+      this.posYIzquierda = random(150, 300);                   
       //centro
       this.posXCentro = width/2;                                           
-      this.posYCentro = 200;                                      
+      this.posYCentro =  random(100, 300);                                      
       //derecha
       this.posXDerecha = width - 100;                     
-      this.posYDerecha = 200;    
+      this.posYDerecha =  random(150, 300);    
       
     //cambiar Angulos
-    this.angulo = -80;
+    this.angulo = -80; 
     
+    this.randomImg = random(this.imgPlumas)
     angleMode(DEGREES);
+    
+    this.seleccionarImagenRandom();
+  }
+  
+  seleccionarImagenRandom() {
+    this.imgIzquierda = random(this.imgPlumas);
+    this.imgCentro = random(this.imgPlumas);
+    this.imgDerecha = random(this.imgPlumas);
   }
   
   aparecer(){
     if (!this.mostrarCentro) {
-      this.mostrarCentro = true;  
+      this.mostrarCentro = true; 
     } else if (this.mostrarCentro && !this.mostrarIzquierda) {
       this.mostrarIzquierda = true;
     } else if (this.mostrarIzquierda && !this.mostrarDerecha) {
@@ -38,58 +59,64 @@ class Plumas {
     } 
   }
   
+
+  
 dibujar(){
-    this.imgIzquierda.resize(this.tamañoImagen, 0);
-    this.imgDerecha.resize(this.tamañoImagen, 0);
-    
-    //izquierda
+    this.randomImg.resize(this.tamañoImagen, 0);
+  
     if (this.mostrarIzquierda) {
-      push();
-      imageMode(CENTER);
-      image(this.imgIzquierda, this.posXIzquierda, this.posYIzquierda); 
-      pop();
-    }
+        push();
+        imageMode(CENTER);
+      this.imgIzquierda.resize(this.tamañoImagen, 0);
+      image(this.imgIzquierda, this.posXIzquierda, this.posYIzquierda);
+        //image(this.randomImg, this.posXIzquierda, this.posYIzquierda); 
+        pop(); 
+      }
     //centro 
     if (this.mostrarCentro) {
       push();
       imageMode(CENTER);
-      image(this.imgDerecha, this.posXCentro, this.posYCentro);
+            this.imgCentro.resize(this.tamañoImagen, 0);
+      image(this.imgCentro, this.posXCentro, this.posYCentro);
+      //image(this.randomImg, this.posXCentro, this.posYCentro);
       pop();
     }
     //derecha
-    if (this.mostrarDerecha) { 
-      push();
-      imageMode(CENTER);
-      image(this.imgIzquierda, this.posXDerecha, this.posYDerecha); 
-      pop();
-    }
-    
+      if (this.mostrarDerecha) { 
+        push();
+        imageMode(CENTER);
+              this.imgDerecha.resize(this.tamañoImagen, 0);
+      image(this.imgDerecha, this.posXDerecha, this.posYDerecha);
+        //image(this.randomImg, this.posXDerecha, this.posYDerecha); 
+        pop();
+      }
   }
   
    aparecerRotadas(){
+     
     if (!this.mostrarCentroRotada && this.mostrarCentro) {
       this.mostrarCentroRotada = true;
-    } 
-    if (!this.mostrarIzquierdaRotada && this.mostrarIzquierda) {
+    } else if (!this.mostrarIzquierdaRotada && this.mostrarIzquierda) {
       this.mostrarIzquierdaRotada = true; 
-    }
-    if (!this.mostrarDerechaRotada && this.mostrarDerecha) {
+     // this.seleccionarImagenRandom();
+    } else if (!this.mostrarDerechaRotada && this.mostrarDerecha) {
       this.mostrarDerechaRotada = true;
+     // this.seleccionarImagenRandom();
     } 
   }
-  
-  cambiarAngulos(){
-  //para que las manchas no cambien de angulo al mismo tiempo, jugar con los true/false de las variables de "mostrar"  
-    
+   //la izquierda es la unica que funciona?
+  cambiarAngulos(){    
    //izquierda
    if (this.mostrarIzquierdaRotada) {    
-     this.mostrarIzquierda = false;   
+     this.mostrarIzquierda = false; 
      push();
      translate(this.posXIzquierda, this.posYIzquierda);
      rotate(this.angulo);
      //rotate(frameCount); //(para monitorear si funciona bien la rotacion). 
      imageMode(CENTER);
+     this.imgIzquierda.resize(this.tamañoImagen, 0);
      image(this.imgIzquierda, 0, 0);
+     //image(this.randomImg, 0, 0);
      pop();  
    }
    
@@ -101,7 +128,9 @@ dibujar(){
      rotate(this.angulo);
      //rotate(frameCount); //(para monitorear si funciona bien la rotacion). 
      imageMode(CENTER);
-     image(this.imgDerecha, 0, 0);
+          this.imgCentro.resize(this.tamañoImagen, 0);
+           image(this.imgCentro, 0, 0);
+     //image(this.randomImg, 0, 0);
      pop();  
    }
 
@@ -113,8 +142,10 @@ dibujar(){
      rotate(this.angulo);
      //rotate(frameCount); //(para monitorear si funciona bien la rotacion). 
      imageMode(CENTER);
-     image(this.imgIzquierda, 0, 0);
-     pop();  
+     this.imgDerecha.resize(this.tamañoImagen, 0);
+     image(this.imgDerecha, 0, 0);
+     //image(this.randomImg, 0, 0);
+     pop(); 
    }
   }
 }

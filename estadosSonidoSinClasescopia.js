@@ -51,7 +51,14 @@ function setup() {
   background(207,193,166);
 
   manchas = new Manchas();
+  //--plumas--//
   plumas = new Plumas();
+ 
+  /*plumas.CargarImg('data/obj0.png'); 
+  plumas.CargarImg('data/obj1.png'); 
+  plumas.CargarImg('data/obj2.png'); */
+  //plumas.CargarDeFormaRandom();
+  
   //--Barra--//
   tamañoMaxRec = windowsX-40;
   posRandomY = random(height/2, height/3);
@@ -142,13 +149,16 @@ function draw() {
     rect(20, posRandomY - 25, tamañoBarra, 50); // Dibujar la Barra dinámica
     pop();
 
-
-    //CONTADOR(cambio de estado)-----------//
-      if (finDelSonido) {marca = millis();}
-      if (!haySonido ) {let ahora = millis();
+    
+     if (inicioElSonido || finDelSonido) { //EVENTO CONTADOR (CUANDO HAY SONIDO)
+      marca = millis();
+    } 
+    if (haySonido || !haySonido) { 
+        let ahora = millis();
         if (ahora > marca + tiempoLimitebarra) {estado = "plumas";
-          marca = millis();}}
-    //-------------------------------------//
+         marca = millis();}
+    }  
+
   } else if (estado === "plumas") {
     background(206,204,189); 
     manchas.dibujar();
@@ -175,11 +185,9 @@ function draw() {
      
     //CONTADOR(cambio de estado)-----------//
       if (finDelSonido) {
-
       marca = millis();}
-      if (!haySonido ) {
+      if (!haySonido &&  plumas.mostrarCentro) { //plumas.mostrarCentro esta para que si o si tengamos que dibujar un pico/pluma antes de pasar al siguiente estado
         plumas.dibujar();
-
         let ahora = millis();
         if (ahora > marca + tiempoLimiteplumas) {estado = "reiniciar";
           marca = millis();}}
@@ -203,8 +211,12 @@ function draw() {
     
     plumas.dibujar();
     
-    if (haySonido) {
+    if (inicioElSonido) { //EVENTO
       plumas.aparecerRotadas()
+      plumas.cambiarAngulos();
+    } 
+    if (haySonido) {
+
       plumas.cambiarAngulos();
     }
     
