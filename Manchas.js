@@ -54,4 +54,11 @@ class Manchas {
       image(this.imgDerecha, this.posXDerechaInf, this.posYDerechaInf);
     }
   }
+  
+  reiniciar() {
+    this.mostrarIzquierdaSuperior = false;
+    this.mostrarDerechaSuperior = false;
+    this.mostrarIzquierdaInferior = false;
+    this.mostrarDerechaInferior = false;
+  }
 }

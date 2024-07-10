@@ -148,4 +148,28 @@ dibujar(){
      pop(); 
    }
   }
+  
+  reiniciar() {
+    this.mostrarIzquierda = false;
+    this.mostrarCentro = false;
+    this.mostrarDerecha = false; 
+    
+    this.mostrarIzquierdaRotada = false;
+    this.mostrarCentroRotada = false;
+    this.mostrarDerechaRotada = false;
+    
+    this.imgIzquierda = random(this.imgPlumas);
+    this.imgCentro = random(this.imgPlumas);
+    this.imgDerecha = random(this.imgPlumas);
+    
+          //izquierda
+      this.posXIzquierda = width/3;  
+      this.posYIzquierda = random(150, 300);                   
+      //centro
+      this.posXCentro = width/2;                                           
+      this.posYCentro =  random(100, 300);                                      
+      //derecha
+      this.posXDerecha = width/1.5;                     
+      this.posYDerecha =  random(150, 300);  
+  }
 }

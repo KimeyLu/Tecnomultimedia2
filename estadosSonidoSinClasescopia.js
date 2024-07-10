@@ -118,7 +118,7 @@ function draw() {
       if (!haySonido ) {
         manchas.dibujar();
         let ahora = millis();
-        if (ahora > marca + tiempoLimitefondo) {estado = "barra";
+        if (ahora > marca + tiempoLimitefondo && manchas.mostrarDerechaSuperior) {estado = "barra";
           marca = millis();}}
     //-------------------------------------//
   } else if (estado === "barra") {   
@@ -220,7 +220,7 @@ function draw() {
     }
     
     
-          if (finDelSonido) {
+      if (finDelSonido) {
       marca = millis();}
       if (!haySonido) {
       plumas.cambiarAngulos();
@@ -229,13 +229,20 @@ function draw() {
           marca = millis();}}
   } 
   if (estado === "reiniciar") { 
-          if (finDelSonido) {
-      marca = millis();}
-      if (!haySonido) {
-      plumas.cambiarAngulos();
-        let ahora = millis();
-        if (ahora > marca + tiempoLimiteplumas) {estado = "fondo";
-          marca = millis();}}
+          /*if (finDelSonido) {
+      marca = millis();}*/
+      if (haySonido) {
+     // plumas.cambiarAngulos();
+        //let ahora = millis();
+       // if (ahora > marca + tiempoLimiteplumas) {
+        marca = millis();
+        manchas.reiniciar();  
+        plumas.reiniciar();
+        antesHabiaSonido = false;
+          posRandomY = random(height/2, height/3);
+          
+        estado = "fondo";
+      }
   }
   
 
