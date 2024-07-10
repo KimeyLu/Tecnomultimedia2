@@ -28,6 +28,7 @@ const model_url = 'https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/
 //---CANVAS
 let windowsX;
 let windowsY;
+let fondo;
 //---VARIABLES DE LAS MANCHAS---//
 let manchas;
 //---VARIABLES DE LA BARRA---//
@@ -41,23 +42,16 @@ let posRandomY;
 //---VARIABLES DE LAS PLUMAS---//
 let plumas;
 
-function preload() {
-}
-
 function setup() {
   windowsX = random(600, 700);
   windowsY = random(400, 500);
   createCanvas(windowsX, windowsY);
   background(207,193,166);
-
+  fondo = loadImage('data/fondo.png');
+  
   manchas = new Manchas();
   //--plumas--//
   plumas = new Plumas();
- 
-  /*plumas.CargarImg('data/obj0.png'); 
-  plumas.CargarImg('data/obj1.png'); 
-  plumas.CargarImg('data/obj2.png'); */
-  //plumas.CargarDeFormaRandom();
   
   //--Barra--//
   tamañoMaxRec = windowsX-40;
@@ -175,25 +169,31 @@ function draw() {
     rect(20, posRandomY - 25, tamañoBarra, 50); // Dibujar la Barra dinámica
     pop();
        
-    if (inicioElSonido) { //EVENTO
+    if (inicioElSonido || finDelSonido) { //EVENTO
       plumas.aparecer();
       plumas.dibujar();
+      
+      marca = millis();
     } 
-    if (haySonido) {
+    if (haySonido || !haySonido) {
       plumas.dibujar();
+      
+              let ahora = millis();
+        if (ahora > marca + tiempoLimiteplumas && plumas.mostrarCentro) {estado = "plumasRotar";
+          marca = millis();}
     }   
      
     //CONTADOR(cambio de estado)-----------//
-      if (finDelSonido) {
+      /*if (finDelSonido) {
       marca = millis();}
       if (!haySonido &&  plumas.mostrarCentro) { //plumas.mostrarCentro esta para que si o si tengamos que dibujar un pico/pluma antes de pasar al siguiente estado
         plumas.dibujar();
         let ahora = millis();
         if (ahora > marca + tiempoLimiteplumas) {estado = "reiniciar";
-          marca = millis();}}
+          marca = millis();}}*/
     //-------------------------------------//  
   } 
-  if (estado === "reiniciar") { 
+  if (estado === "plumasRotar") { 
     background(206,204,189);
     manchas.dibujar();
     
@@ -216,18 +216,31 @@ function draw() {
       plumas.cambiarAngulos();
     } 
     if (haySonido) {
-
       plumas.cambiarAngulos();
     }
     
-    if (finDelSonido) {
+    
+          if (finDelSonido) {
+      marca = millis();}
+      if (!haySonido) {
       plumas.cambiarAngulos();
-    }
-    if (!haySonido ) {
-      plumas.cambiarAngulos();  
-    }
+        let ahora = millis();
+        if (ahora > marca + tiempoLimiteplumas) {estado = "reiniciar";
+          marca = millis();}}
   } 
+  if (estado === "reiniciar") { 
+          if (finDelSonido) {
+      marca = millis();}
+      if (!haySonido) {
+      plumas.cambiarAngulos();
+        let ahora = millis();
+        if (ahora > marca + tiempoLimiteplumas) {estado = "fondo";
+          marca = millis();}}
+  }
   
+
+  image(fondo, 0, 0, width, height);
+
   //---MONITOREAR ESTADOS---:
   console.log(estado);
   /*if(monitorear) {

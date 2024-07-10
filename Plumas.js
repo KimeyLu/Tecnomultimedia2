@@ -15,8 +15,8 @@ class Plumas {
     let pluma2 = loadImage('data/obj1.png');
     let pluma3 = loadImage('data/obj2.png');
     let pluma4 = loadImage('data/obj3.png');
-    let pluma5 = loadImage('data/mancha00.png');
-    let pluma6 = loadImage('data/mancha02.png');
+    let pluma5 = loadImage('data/obj4.png');
+    let pluma6 = loadImage('data/obj5.png');
     this.imgPlumas = [pluma1, pluma2, pluma3, pluma4, pluma5,pluma6];    
         
     //    
@@ -25,13 +25,13 @@ class Plumas {
     this.imgDerecha = loadImage('data/obj2.png');
 
       //izquierda
-      this.posXIzquierda = 100;  
+      this.posXIzquierda = width/3;  
       this.posYIzquierda = random(150, 300);                   
       //centro
       this.posXCentro = width/2;                                           
       this.posYCentro =  random(100, 300);                                      
       //derecha
-      this.posXDerecha = width - 100;                     
+      this.posXDerecha = width/1.5;                     
       this.posYDerecha =  random(150, 300);    
       
     //cambiar Angulos
